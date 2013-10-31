@@ -5,10 +5,10 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{AE9D7688-E847-4446-8063-CC0F05E32DDF}</ProjectGuid>
+    <ProjectGuid>{9C197D8D-8290-4832-B309-D1158E505811}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Serpis.Ad</RootNamespace>
-    <AssemblyName>PTreeView</AssemblyName>
+    <RootNamespace>PCategoria</RootNamespace>
+    <AssemblyName>PCategoria</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -57,7 +57,6 @@
       <Package>gtk-sharp-2.0</Package>
     </Reference>
     <Reference Include="Mono.Posix" />
-    <Reference Include="System.Data" />
     <Reference Include="MySql.Data, Version=6.4.3.0, Culture=neutral, PublicKeyToken=20449f9ba87f7ae2">
       <Private>False</Private>
       <Package>mysql-connector-net</Package>
@@ -71,15 +70,9 @@
   <ItemGroup>
     <Compile Include="gtk-gui\generated.cs" />
     <Compile Include="MainWindow.cs" />
+    <Compile Include="gtk-gui\MainWindow.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="gtk-gui\MainWindow.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <ProjectReference Include="..\PSerpisAd\PSerpisAd.csproj">
-      <Project>{22CB088B-F76E-497C-AD36-0213D75D17F5}</Project>
-      <Name>PSerpisAd</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>

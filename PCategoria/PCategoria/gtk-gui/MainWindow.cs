@@ -4,10 +4,9 @@
 public partial class MainWindow
 {
 	private global::Gtk.UIManager UIManager;
-	private global::Gtk.Action editAction;
 	private global::Gtk.Action removeAction;
 	private global::Gtk.VBox vbox1;
-	private global::Gtk.Toolbar toolbar;
+	private global::Gtk.Toolbar toolbar1;
 	private global::Gtk.ScrolledWindow GtkScrolledWindow;
 	private global::Gtk.TreeView treeView;
 	
@@ -17,9 +16,6 @@ public partial class MainWindow
 		// Widget MainWindow
 		this.UIManager = new global::Gtk.UIManager ();
 		global::Gtk.ActionGroup w1 = new global::Gtk.ActionGroup ("Default");
-		this.editAction = new global::Gtk.Action ("editAction", global::Mono.Unix.Catalog.GetString ("_Editar"), null, "gtk-edit");
-		this.editAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Editar");
-		w1.Add (this.editAction, null);
 		this.removeAction = new global::Gtk.Action ("removeAction", global::Mono.Unix.Catalog.GetString ("Eliminar"), null, "gtk-remove");
 		this.removeAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Eliminar");
 		w1.Add (this.removeAction, null);
@@ -33,12 +29,12 @@ public partial class MainWindow
 		this.vbox1.Name = "vbox1";
 		this.vbox1.Spacing = 6;
 		// Container child vbox1.Gtk.Box+BoxChild
-		this.UIManager.AddUiFromString ("<ui><toolbar name='toolbar'><toolitem name='editAction' action='editAction'/><toolitem name='removeAction' action='removeAction'/></toolbar></ui>");
-		this.toolbar = ((global::Gtk.Toolbar)(this.UIManager.GetWidget ("/toolbar")));
-		this.toolbar.Name = "toolbar";
-		this.toolbar.ShowArrow = false;
-		this.vbox1.Add (this.toolbar);
-		global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.toolbar]));
+		this.UIManager.AddUiFromString ("<ui><toolbar name='toolbar1'><toolitem name='removeAction' action='removeAction'/></toolbar></ui>");
+		this.toolbar1 = ((global::Gtk.Toolbar)(this.UIManager.GetWidget ("/toolbar1")));
+		this.toolbar1.Name = "toolbar1";
+		this.toolbar1.ShowArrow = false;
+		this.vbox1.Add (this.toolbar1);
+		global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.toolbar1]));
 		w2.Position = 0;
 		w2.Expand = false;
 		w2.Fill = false;
