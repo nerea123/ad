@@ -5,10 +5,10 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{22CB088B-F76E-497C-AD36-0213D75D17F5}</ProjectGuid>
+    <ProjectGuid>{84AAAA6E-E6C3-4F4C-9FD1-A7478560B31B}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>PSerpisAd</RootNamespace>
-    <AssemblyName>PSerpisAd</AssemblyName>
+    <RootNamespace>ComboBoxHelper</RootNamespace>
+    <AssemblyName>ComboBoxHelper</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,20 +30,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <Private>False</Private>
-      <Package>gtk-sharp-2.0</Package>
-    </Reference>
-    <Reference Include="MySql.Data, Version=6.4.3.0, Culture=neutral, PublicKeyToken=20449f9ba87f7ae2">
-      <Private>False</Private>
-      <Package>mysql-connector-net</Package>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MyClass.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="TreeViewHelper.cs" />
-    <Compile Include="ComboBoxHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
