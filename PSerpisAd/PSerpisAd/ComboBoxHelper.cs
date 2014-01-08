@@ -7,25 +7,19 @@ namespace Serpis.Ad
 {
 	public class ComboBoxHelper
 	{
-		IDbConnection dbConnection;
 		ComboBox comboBox;
-		string nombre;
-		string id;
-		string tabla;
+		
 		ListStore liststore;
-		int elementoInicial;
+		int id;
 		TreeIter iter;
-		private const string selectFormat="select {0}, {1}, from {2}";
+		private const string selectFormat="select {0}, {1} from {2}";
 		public ComboBoxHelper (IDbConnection dbConnection,ComboBox comboBox,string nombre, string id,int elementoInicial,string tabla)
 		{
 			this.comboBox=comboBox;
-			this.dbConnection=dbConnection;
-			this.nombre=nombre;
-			this.tabla=tabla;
-			this.id=id;
-			this.elementoInicial=elementoInicial;
+			
 			IDbCommand dbCommand= dbConnection.CreateCommand();
 			dbCommand.CommandText = string.Format(selectFormat,id,nombre,tabla);
+			
 			IDataReader dbDataReader= dbCommand.ExecuteReader();
 			
 //			CellRendererText cell1=new CellRendererText();
@@ -39,8 +33,8 @@ namespace Serpis.Ad
 			
 			TreeIter initialIter= liststore.AppendValues(0,"<sin asignar>");//si el elemento inicial no existe se selecciona esta opcion
 			while(dbDataReader.Read()){
-				int id2=(int)dbDataReader["id"];
-				string nombre2=(string)dbDataReader["nombre"];
+				int id2=(int)dbDataReader[id];
+				string nombre2=(string)dbDataReader[nombre];
 				TreeIter iter=liststore.AppendValues(id2,nombre2);	
 				if(elementoInicial==id2)
 					initialIter=iter;

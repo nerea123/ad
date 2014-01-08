@@ -12,6 +12,16 @@ namespace Serpis.Ad
 		private ListStore listStore;
 		private TreeView treeView;
 		private IDbCommand dbCommand;
+		//private TreeIter iter;
+		private string id;
+		private string nombre;
+		
+		public TreeViewHelper (TreeView treeView,String selectSql) : 
+			this(treeView,App.Instance.DbConnection,selectSql)
+		{
+			
+		}
+		
 		public TreeViewHelper (TreeView treeView,IDbConnection dbConnection,String selectSql)
 		{
 			Console.WriteLine("Ctor Treeviewhelper");
@@ -35,6 +45,38 @@ namespace Serpis.Ad
 			treeView.Model=listStore;
 			
 		}
+		
+		private int idColumIndex=0;
+		public int IdColumIndex{
+			get{return idColumIndex;}
+			set{idColumIndex=value;}
+		}
+		
+		  public string Id{
+			get {
+				TreeIter iter;
+				treeView.Selection.GetSelected(out iter);
+				id=listStore.GetValue(iter,0).ToString();
+				if(id!=null)
+					return id;
+				//else 
+					return string.Empty;
+			}
+		}
+		 
+		
+		  public string Nombre{
+			get {
+				TreeIter iter;
+				treeView.Selection.GetSelected(out iter);
+				nombre=listStore.GetValue(iter,1).ToString();
+				if(id!=null)
+					return nombre;
+				//else 
+					return string.Empty;
+			}
+		}
+		
 		
 		public int getFieldCount(){
 			return fieldcount;
@@ -81,7 +123,7 @@ namespace Serpis.Ad
 		}
 		
 		public void actualizar(IDbCommand dbCommand, ListStore listStore){
-			Console.WriteLine("holaa");
+			
 				dbCommand.CommandText= selectSql;
 				IDataReader dataReader= dbCommand.ExecuteReader();
 				int fieldcount2=dataReader.FieldCount;
@@ -91,6 +133,7 @@ namespace Serpis.Ad
 				dataReader.Close();
 	
 	}
+		
 		
 		
 	

@@ -44,6 +44,10 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="TreeViewHelper.cs" />
     <Compile Include="ComboBoxHelper.cs" />
+    <Compile Include="IEntityListView.cs" />
+    <Compile Include="UiManagerHelper.cs" />
+    <Compile Include="EntityListView.cs" />
+    <Compile Include="App.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

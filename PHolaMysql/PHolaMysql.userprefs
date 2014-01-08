@@ -2,7 +2,8 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
   <MonoDevelop.Ide.Workbench ActiveDocument="PHolaMysql/Main.cs">
     <Files>
-      <File FileName="PHolaMysql/Main.cs" Line="35" Column="5" />
+      <File FileName="../PSerpisAd/PSerpisAd/ComboBoxHelper.cs" Line="18" Column="32" />
+      <File FileName="PHolaMysql/Main.cs" Line="87" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

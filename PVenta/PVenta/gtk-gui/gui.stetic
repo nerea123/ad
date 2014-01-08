@@ -6,10 +6,36 @@
   </configuration>
   <import>
     <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <widget-library name="../../../PSerpisAd/PSerpisAd/bin/Debug/PSerpisAd.dll" />
     <widget-library name="../bin/Debug/PVenta.exe" internal="true" />
   </import>
-  <widget class="Gtk.Window" id="MainWindow" design-size="400 300">
-    <action-group name="Default" />
+  <widget class="Gtk.Window" id="MainWindow" design-size="387 290">
+    <action-group name="Default">
+      <action id="InfoAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Información</property>
+        <property name="ShortLabel" translatable="yes">Información</property>
+        <property name="StockId">gtk-dialog-info</property>
+      </action>
+      <action id="addAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Añadir</property>
+        <property name="ShortLabel" translatable="yes">Añadir</property>
+        <property name="StockId">gtk-add</property>
+      </action>
+      <action id="deleteAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Eliminar</property>
+        <property name="ShortLabel" translatable="yes">Eliminar</property>
+        <property name="StockId">gtk-delete</property>
+      </action>
+      <action id="refreshAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Actualizar</property>
+        <property name="ShortLabel" translatable="yes">Actualizar</property>
+        <property name="StockId">gtk-refresh</property>
+      </action>
+    </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">MainWindow</property>
     <property name="WindowPosition">CenterOnParent</property>
@@ -34,7 +60,13 @@
           <widget class="Gtk.Toolbar" id="toolbar1">
             <property name="MemberName" />
             <property name="ShowArrow">False</property>
-            <node name="__gtksharp_71_Stetic_Editor_ActionToolbar" type="Toolbar" />
+            <node name="__gtksharp_71_Stetic_Editor_ActionToolbar" type="Toolbar">
+              <node type="Toolitem" action="refreshAction" />
+              <node type="Toolitem" action="InfoAction" />
+              <node type="Toolitem" action="addAction" />
+              <node type="Toolitem" action="deleteAction" />
+              <node type="Toolitem" />
+            </node>
           </widget>
           <packing>
             <property name="Position">1</property>
@@ -49,12 +81,47 @@
             <property name="CanFocus">True</property>
             <property name="CurrentPage">0</property>
             <child>
-              <placeholder />
+              <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow1">
+                <property name="MemberName" />
+                <property name="ShadowType">In</property>
+                <child>
+                  <widget class="Gtk.TreeView" id="treeview2">
+                    <property name="MemberName" />
+                    <property name="CanFocus">True</property>
+                    <property name="ShowScrollbars">True</property>
+                  </widget>
+                </child>
+              </widget>
             </child>
             <child>
               <widget class="Gtk.Label" id="label1">
                 <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">page1</property>
+                <property name="LabelProp" translatable="yes">Categoria</property>
+              </widget>
+              <packing>
+                <property name="type">tab</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow">
+                <property name="MemberName" />
+                <property name="ShadowType">In</property>
+                <child>
+                  <widget class="Gtk.TreeView" id="treeview1">
+                    <property name="MemberName" />
+                    <property name="CanFocus">True</property>
+                    <property name="ShowScrollbars">True</property>
+                  </widget>
+                </child>
+              </widget>
+              <packing>
+                <property name="Position">1</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="label2">
+                <property name="MemberName" />
+                <property name="LabelProp" translatable="yes">Articulo</property>
               </widget>
               <packing>
                 <property name="type">tab</property>

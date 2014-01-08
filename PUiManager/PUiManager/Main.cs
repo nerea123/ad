@@ -1,8 +1,7 @@
 using System;
 using Gtk;
 
-
-namespace PVenta
+namespace PUiManager
 {
 	class MainClass
 	{
