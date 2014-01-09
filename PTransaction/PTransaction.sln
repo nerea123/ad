@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PTransaction", "PTransaction\PTransaction.csproj", "{FD2576B9-C5F2-4741-B630-04C08A75F523}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD2576B9-C5F2-4741-B630-04C08A75F523}.Debug|x86.ActiveCfg = Debug|x86
+		{FD2576B9-C5F2-4741-B630-04C08A75F523}.Debug|x86.Build.0 = Debug|x86
+		{FD2576B9-C5F2-4741-B630-04C08A75F523}.Release|x86.ActiveCfg = Release|x86
+		{FD2576B9-C5F2-4741-B630-04C08A75F523}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = PTransaction\PTransaction.csproj
+	EndGlobalSection
+EndGlobal
