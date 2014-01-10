@@ -1,5 +1,4 @@
 using System;
-using MySql.Data.MySqlClient;
 using System.Data;
 using Gtk;
 
@@ -34,7 +33,7 @@ namespace Serpis.Ad
 			TreeIter initialIter= liststore.AppendValues(0,"<sin asignar>");//si el elemento inicial no existe se selecciona esta opcion
 			while(dbDataReader.Read()){
 				int id2=(int)dbDataReader[id];
-				string nombre2=(string)dbDataReader[nombre];
+				string nombre2=dbDataReader[nombre].ToString();
 				TreeIter iter=liststore.AppendValues(id2,nombre2);	
 				if(elementoInicial==id2)
 					initialIter=iter;
