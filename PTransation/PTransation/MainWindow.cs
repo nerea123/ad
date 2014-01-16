@@ -57,6 +57,7 @@ public partial class MainWindow: Gtk.Window
 		inf = new Informacion ();
 		helper = new TreeViewHelper (inf.getTreviewTelevisor(), "select * from televisor");
 		helper2 = new TreeViewHelper (inf.getTreviewComprador(), "select saldo from comprador");
+		Show ();
 	}
 
 	protected void crearAlerta(string alert, MessageType m){

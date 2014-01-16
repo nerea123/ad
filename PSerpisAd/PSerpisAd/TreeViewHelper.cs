@@ -133,6 +133,16 @@ namespace Serpis.Ad
 				dataReader.Close();
 	
 	}
+
+		public void refresh(){
+
+			for (int i=0;i<getFieldCount();i++){//elimina columnas
+				treeView.RemoveColumn(treeView.GetColumn(0));
+			}
+			listStore.Clear();
+
+			this.actualizar(IDbCommand,listStore);
+		}
 		
 		
 		

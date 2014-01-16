@@ -40,14 +40,15 @@ namespace Serpis.Ad
 		
 			
 			private void refresh(){
-				ListStore listStore=helper.ListStore;
+			/*ListStore listStore=helper.ListStore;
 				int fieldCountArticulo=helper.getFieldCount();
 				for (int i=0;i<fieldCountArticulo;i++){//elimina columnas
 					treeView.RemoveColumn(treeView.GetColumn(0));
 				}
 				listStore.Clear();
 				listStore=helper.ListStore;
-				helper.actualizar(helper.IDbCommand,listStore);
+				helper.actualizar(helper.IDbCommand,listStore);*/
+			helper.refresh ();
 		}
 		
 		private void edit(){
