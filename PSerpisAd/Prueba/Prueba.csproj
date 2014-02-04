@@ -5,10 +5,10 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{968A84B5-36B4-4292-BEC0-EA34ED61BF40}</ProjectGuid>
+    <ProjectGuid>{2A0AB31C-ECF5-405B-82C3-988DFA0435DF}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>PSerpisAdTests</RootNamespace>
-    <AssemblyName>PSerpisAdTests</AssemblyName>
+    <RootNamespace>Prueba</RootNamespace>
+    <AssemblyName>Prueba</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,18 +31,11 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="nunit.framework">
-      <HintPath>..\..\..\..\..\..\..\Program Files %28x86%29\Xamarin Studio\AddIns\NUnit\nunit.framework.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Test.cs" />
-    <Compile Include="ModelHelperTests.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <ProjectReference Include="..\PSerpisAd\PSerpisAd.csproj">
-      <Project>{22CB088B-F76E-497C-AD36-0213D75D17F5}</Project>
-      <Name>PSerpisAd</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>

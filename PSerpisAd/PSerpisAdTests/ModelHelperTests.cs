@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace Serpis.Ad
 {
+	[TestFixture ()]
 	internal class ModelHelperFoo
 	{
 		[Key]
@@ -13,7 +14,10 @@ namespace Serpis.Ad
 		public string Nombre {get;set;}
 	}
 
+	[TestFixture ()]
 	internal class ModelHelperBar
+
+		
 	{
 		[Key]
 		public int Id {get;set;}
@@ -45,19 +49,21 @@ namespace Serpis.Ad
 
 		}
 
-		public void save(){
+		[Test ()]
+		public void SaveTest(){
 			string selectText;
 			string expected;
 
 			List<string> campos=new List<string>();
 			campos.Add ("sara");
 			string id = "3";
-			selectText = ModelHelper.SaveTest (typeof(ModelHelperFoo),campos,id);
+
+			selectText = ModelHelper.SaveTest ();
 			expected = "update modelhelperfoo set nombre=sara where id=3";
 			Assert.AreEqual (expected, selectText);
 
 			campos.Add ("10");
-			selectText = ModelHelper.SaveTest (typeof(ModelHelperBar),campos,id);
+			selectText = ModelHelper.SaveTest ();
 			expected = "update modelhelperbar set nombre=sara, precio=10 where id=3";
 			Assert.AreEqual (expected, selectText);
 		}

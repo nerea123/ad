@@ -44,48 +44,62 @@ namespace Serpis.Ad
 			return obj;
 		}
 		
-		public static void Save(Type type,List<string> campos, string id) {
+		public static void Save(object obj) {
+			Type type = obj.GetType ();
 			string keyName = null;
-			List<string> fieldNames= new List<string>();
+			object keyValue = null;
+			List<object> fieldNames= new List<object>();
+			List<object> campos=new List<object>();
 			IDbCommand updateDbCommand = App.Instance.DbConnection.CreateCommand ();
 			foreach(PropertyInfo propertyInfo in type.GetProperties()){
-				if (propertyInfo.IsDefined (typeof(KeyAttribute), true))
-					keyName=propertyInfo.Name.ToLower();
-				else if (propertyInfo.IsDefined (typeof(FieldAttribute), true))
-					fieldNames.Add(propertyInfo.Name.ToLower());
+				if (propertyInfo.IsDefined (typeof(KeyAttribute), true)) {
+					keyName = propertyInfo.Name.ToLower ();
+					keyValue = propertyInfo.GetValue (obj, null);
+				}
+				else if (propertyInfo.IsDefined (typeof(FieldAttribute), true)) {
+					fieldNames.Add (propertyInfo.Name.ToLower ());
+					campos.Add (propertyInfo.GetValue (obj ,null));
+				}
 
 			}
 			string tableName = type.Name.ToLower();
-			List<string> aux=null;
+			List<object> aux=new List<object>();
 			for(int i=0;i<campos.Count;i++){
 				aux.Add (fieldNames [i] + "=" + campos [i]);
 			}
-			updateDbCommand.CommandText = String.Format("update {0} set {1} where {2}={3}",tableName,String.Join(", ",aux),keyName,int.Parse(id));
+			updateDbCommand.CommandText = String.Format("update {0} set {1} where {2}={3}",tableName,String.Join(", ",aux),keyName,keyValue);
 			updateDbCommand.ExecuteNonQuery ();	
 
 			//return String.Format("update {0} set {1} where {2}={3}",tableName,String.Join(", ",aux),keyName,int.Parse(id));;		
 		}
 
-		public static string SaveTest(Type type,List<string> campos, string id) {
+		public static string SaveTest(object obj) {
+			Type type = obj.GetType ();
 			string keyName = null;
-			List<string> fieldNames= new List<string>();
-			IDbCommand updateDbCommand = App.Instance.DbConnection.CreateCommand ();
+			object keyValue = null;
+			List<object> fieldNames= new List<object>();
+			List<object> campos=new List<object>();
+			//IDbCommand updateDbCommand = App.Instance.DbConnection.CreateCommand ();
 			foreach(PropertyInfo propertyInfo in type.GetProperties()){
-				if (propertyInfo.IsDefined (typeof(KeyAttribute), true))
-					keyName=propertyInfo.Name.ToLower();
-				else if (propertyInfo.IsDefined (typeof(FieldAttribute), true))
-					fieldNames.Add(propertyInfo.Name.ToLower());
+				if (propertyInfo.IsDefined (typeof(KeyAttribute), true)) {
+					keyName = propertyInfo.Name.ToLower ();
+					keyValue = propertyInfo.GetValue (obj, null);
+				}
+				else if (propertyInfo.IsDefined (typeof(FieldAttribute), true)) {
+					fieldNames.Add (propertyInfo.Name.ToLower ());
+					campos.Add (propertyInfo.GetValue (obj ,null));
+				}
 
 			}
 			string tableName = type.Name.ToLower();
-			List<string> aux=null;
+			List<object> aux=new List<object>();
 			for(int i=0;i<campos.Count;i++){
 				aux.Add (fieldNames [i] + "=" + campos [i]);
 			}
-			updateDbCommand.CommandText = String.Format("update {0} set {1} where {2}={3}",tableName,String.Join(", ",aux),keyName,int.Parse(id));
-			updateDbCommand.ExecuteNonQuery ();	
+			//updateDbCommand.CommandText = String.Format("update {0} set {1} where {2}={3}",tableName,String.Join(", ",aux),keyName,keyValue);
+			//updateDbCommand.ExecuteNonQuery ();	
 
-			return String.Format("update {0} set {1} where {2}={3}",tableName,String.Join(", ",aux),keyName,int.Parse(id));;		
+			return String.Format("update {0} set {1} where {2}={3}",tableName,String.Join(", ",aux),keyName,keyValue);;		
 		}
 	}
 }
