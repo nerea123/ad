@@ -23,8 +23,13 @@ namespace Serpis.Ad
 	[TestFixture ()]
 	internal class ModelHelperBar
 
-		
 	{
+		public ModelHelperBar(int id, string nombre, decimal precio){
+			this.Id = id;
+			this.Nombre = nombre;
+			this.Precio = precio;
+		}
+
 		[Key]
 		public int Id {get;set;}
 
@@ -69,10 +74,11 @@ namespace Serpis.Ad
 			expected = "update modelhelperfoo set nombre=cat1 where id=3";
 			Assert.AreEqual (expected, selectText);
 
+			ModelHelperBar bar= new ModelHelperBar(3, "cat1",10);
 //			campos.Add ("10");
-//			selectText = ModelHelper.SaveTest ();
-//			expected = "update modelhelperbar set nombre=sara, precio=10 where id=3";
-//			Assert.AreEqual (expected, selectText);
+			selectText = ModelHelper.SaveTest (bar);
+			expected = "update modelhelperbar set nombre=cat1, precio=10 where id=3";
+			Assert.AreEqual (expected, selectText);
 		}
 	}
 }
