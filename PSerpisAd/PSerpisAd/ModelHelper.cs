@@ -48,8 +48,7 @@ namespace Serpis.Ad
 			Type type = obj.GetType ();
 			string keyName = null;
 			object keyValue = null;
-			List<object> fieldNames= new List<object>();
-			List<object> campos=new List<object>();
+			string tableName = type.Name.ToLower();
 			IDbCommand updateDbCommand = App.Instance.DbConnection.CreateCommand ();
 			foreach(PropertyInfo propertyInfo in type.GetProperties()){
 				if (propertyInfo.IsDefined (typeof(KeyAttribute), true)) {
@@ -57,20 +56,13 @@ namespace Serpis.Ad
 					keyValue = propertyInfo.GetValue (obj, null);
 				}
 				else if (propertyInfo.IsDefined (typeof(FieldAttribute), true)) {
-					fieldNames.Add (propertyInfo.Name.ToLower ());
-					campos.Add (propertyInfo.GetValue (obj ,null));
+					DbCommandUtil.AddParameter (updateDbCommand, propertyInfo.Name.ToLower (), propertyInfo.GetValue (obj ,null));
+					updateDbCommand.CommandText = String.Format("update {0} set {1}=@{2} where {3}={4}",tableName,propertyInfo.Name.ToLower (),propertyInfo.Name.ToLower (),keyName,keyValue);
+					updateDbCommand.ExecuteNonQuery ();	
 				}
 
 			}
-			string tableName = type.Name.ToLower();
-			List<object> aux=new List<object>();
-			for(int i=0;i<campos.Count;i++){
-				aux.Add (fieldNames [i] + "=" + campos [i]);
-			}
-			updateDbCommand.CommandText = String.Format("update {0} set {1} where {2}={3}",tableName,String.Join(", ",aux),keyName,keyValue);
-			updateDbCommand.ExecuteNonQuery ();	
 
-			//return String.Format("update {0} set {1} where {2}={3}",tableName,String.Join(", ",aux),keyName,int.Parse(id));;		
 		}
 
 		public static string SaveTest(object obj) {
@@ -88,6 +80,7 @@ namespace Serpis.Ad
 				else if (propertyInfo.IsDefined (typeof(FieldAttribute), true)) {
 					fieldNames.Add (propertyInfo.Name.ToLower ());
 					campos.Add (propertyInfo.GetValue (obj ,null));
+
 				}
 
 			}
@@ -101,6 +94,8 @@ namespace Serpis.Ad
 
 			return String.Format("update {0} set {1} where {2}={3}",tableName,String.Join(", ",aux),keyName,keyValue);;		
 		}
+
+
 	}
 }
 
