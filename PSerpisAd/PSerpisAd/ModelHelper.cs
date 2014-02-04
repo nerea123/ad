@@ -49,6 +49,35 @@ namespace Serpis.Ad
 			return string.Format("{0}=@{0}",fiel);
 		}
 
+
+		public static string GetInsert(Type type){
+
+			List<String> fieldParameters = new List<String> ();
+			List<String> fields = new List<String> ();
+
+			foreach (PropertyInfo propertyInfo in type.GetProperties()) {
+				 if (propertyInfo.IsDefined (typeof(FieldAttribute), true)) {
+					fieldParameters.Add("@"+propertyInfo.Name.ToLower ());
+					fields.Add (propertyInfo.Name.ToLower ());
+				}
+			}
+			string tableName = type.Name.ToLower();
+			return string.Format("insert into {0} ({1}) values ( {2} ) ",tableName,String.Join(", ",fields),String.Join(", ",fieldParameters));
+		}
+
+		public static void Insert(object obj){
+			Type type = obj.GetType ();
+			IDbCommand insertDbCommand = App.Instance.DbConnection.CreateCommand ();
+			insertDbCommand.CommandText = GetInsert (obj.GetType ());
+			foreach (PropertyInfo propertyInfo in type.GetProperties()) {
+				if (propertyInfo.IsDefined (typeof(FieldAttribute), true)) {
+					object valueType= propertyInfo.GetValue(obj,null);
+					DbCommandUtil.AddParameter(insertDbCommand, propertyInfo.Name.ToLower(),valueType);
+				}
+			}
+			insertDbCommand.ExecuteNonQuery ();
+		}
+
 		public static string GetUpdate(Type type){
 			string keyParameter=null;
 			List<String> fieldParameters = new List<String> ();
