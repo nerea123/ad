@@ -60,14 +60,11 @@ namespace Serpis.Ad
 
 		}
 
-		[Test ()]
+		//[Test ()]
 		public void SaveTest(){
 			string selectText;
 			string expected;
 
-			List<string> campos=new List<string>();
-			campos.Add ("sara");
-			string id = "3";
 
 			ModelHelperFoo foo = new ModelHelperFoo (3, "cat1");
 			selectText = ModelHelper.SaveTest (foo);
@@ -78,6 +75,21 @@ namespace Serpis.Ad
 //			campos.Add ("10");
 			selectText = ModelHelper.SaveTest (bar);
 			expected = "update modelhelperbar set nombre=cat1, precio=10 where id=3";
+			Assert.AreEqual (expected, selectText);
+		}
+
+		[Test ()]
+		public void GetUpdate(){
+
+			string selectText;
+			string expected;
+
+			selectText = ModelHelper.GetUpdate(typeof(ModelHelperFoo));
+			expected = "update modelhelperfoo set nombre=@nombre where id=@id";
+			Assert.AreEqual (expected, selectText);
+
+			selectText = ModelHelper.GetUpdate(typeof(ModelHelperBar));
+			expected = "update modelhelperbar set nombre=@nombre, precio=@precio where id=@id";
 			Assert.AreEqual (expected, selectText);
 		}
 	}

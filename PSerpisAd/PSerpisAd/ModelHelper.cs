@@ -43,8 +43,41 @@ namespace Serpis.Ad
 			reader.Close ();
 			return obj;
 		}
-		
-		public static void Save(object obj) {
+
+
+		private static string formatparameter (string fiel){
+			return string.Format("{0}=@{0}",fiel);
+		}
+
+		public static string GetUpdate(Type type){
+			string keyParameter=null;
+			List<String> fieldParameters = new List<String> ();
+
+			foreach (PropertyInfo propertyInfo in type.GetProperties()) {
+				if (propertyInfo.IsDefined (typeof(KeyAttribute), true)) {
+					keyParameter = formatparameter (propertyInfo.Name.ToLower ());
+				} else if (propertyInfo.IsDefined (typeof(FieldAttribute), true)) {
+					fieldParameters.Add(formatparameter (propertyInfo.Name.ToLower ()));
+				}
+			}
+				string tableName = type.Name.ToLower();
+			return string.Format("update {0} set {1} where {2}",tableName,String.Join(", ",fieldParameters), keyParameter);
+		}
+
+		public static void Save(object obj){
+			Type type = obj.GetType ();
+			IDbCommand updateDbCommand = App.Instance.DbConnection.CreateCommand ();
+			updateDbCommand.CommandText = GetUpdate (obj.GetType ());
+			foreach (PropertyInfo propertyInfo in type.GetProperties()) {
+				if (propertyInfo.IsDefined (typeof(KeyAttribute), true) || (propertyInfo.IsDefined (typeof(FieldAttribute), true))) {
+					object valueType= propertyInfo.GetValue(obj,null);
+					DbCommandUtil.AddParameter(updateDbCommand, propertyInfo.Name.ToLower(),valueType);
+				}
+			}
+			updateDbCommand.ExecuteNonQuery ();
+		}
+
+		public static void Save2(object obj) {
 			Type type = obj.GetType ();
 			string keyName = null;
 			object keyValue = null;
@@ -92,7 +125,7 @@ namespace Serpis.Ad
 			//updateDbCommand.CommandText = String.Format("update {0} set {1} where {2}={3}",tableName,String.Join(", ",aux),keyName,keyValue);
 			//updateDbCommand.ExecuteNonQuery ();	
 
-			return String.Format("update {0} set {1} where {2}={3}",tableName,String.Join(", ",aux),keyName,keyValue);;		
+			return String.Format("update {0} set {1} where {2}={3}",tableName,String.Join(", ",aux),keyName,keyValue);	
 		}
 
 
