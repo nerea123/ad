@@ -107,6 +107,16 @@ namespace Serpis.Ad
 			expected = "insert into modelhelperbar (nombre, precio) values ( @nombre, @precio ) ";
 			Assert.AreEqual (expected, selectText);
 		}
+
+		[Test ()]
+		public void GetDelete(){
+			string selectText;
+			string expected;
+
+			selectText = ModelHelper.GetDelete(typeof(ModelHelperFoo));
+			expected = "Delete from modelhelperfoo where id=@id ";
+			Assert.AreEqual (expected, selectText);
+		}
 	}
 }
 

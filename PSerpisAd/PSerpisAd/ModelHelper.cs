@@ -49,6 +49,36 @@ namespace Serpis.Ad
 			return string.Format("{0}=@{0}",fiel);
 		}
 
+		public static string GetDelete(Type type){
+
+			string keyParameter=null;
+			string keyField=null;
+
+
+			foreach (PropertyInfo propertyInfo in type.GetProperties()) {
+				if (propertyInfo.IsDefined (typeof(KeyAttribute), true)) {
+					keyParameter="@"+propertyInfo.Name.ToLower ();
+					keyField=propertyInfo.Name.ToLower ();
+				}
+			}
+			string tableName = type.Name.ToLower();
+			return string.Format("Delete from {0} where {1}={2} ",tableName,keyField,keyParameter);
+		}
+
+		public static void Delete(object obj){
+			Type type = obj.GetType ();
+			IDbCommand deleteDbCommand = App.Instance.DbConnection.CreateCommand ();
+			deleteDbCommand.CommandText = GetDelete (obj.GetType ());
+			foreach (PropertyInfo propertyInfo in type.GetProperties()) {
+				if (propertyInfo.IsDefined (typeof(KeyAttribute), true)) {
+					object valueType= propertyInfo.GetValue(obj,null);
+					DbCommandUtil.AddParameter(deleteDbCommand, propertyInfo.Name.ToLower(),valueType);
+				}
+			}
+			deleteDbCommand.ExecuteNonQuery ();
+		}
+
+
 
 		public static string GetInsert(Type type){
 
