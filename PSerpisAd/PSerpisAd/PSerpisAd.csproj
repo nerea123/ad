@@ -59,6 +59,8 @@
     <Compile Include="ModelHelper.cs" />
     <Compile Include="KeyAttribute.cs" />
     <Compile Include="FieldAttribute.cs" />
+    <Compile Include="ModelInfo.cs" />
+    <Compile Include="ModelInfoStore.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
