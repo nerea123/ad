@@ -112,9 +112,7 @@ namespace Serpis.Ad
 			string keyParameter=null;
 			List<String> fieldParameters = new List<String> ();
 			ModelInfo modelInfo = ModelInfoStore.Get (type);
-			foreach (PropertyInfo propertyInfo in modelInfo.KeyPropertyInfo) 
-					keyParameter = formatparameter (propertyInfo.Name.ToLower ());
-				 
+			keyParameter = formatparameter (modelInfo.KeyPropertyInfo.Name.ToLower ());	 
 			foreach(PropertyInfo propertyInfo in modelInfo.FieldPropertyInfos) 
 				fieldParameters.Add(formatparameter (propertyInfo.Name.ToLower ()));
 
@@ -127,7 +125,7 @@ namespace Serpis.Ad
 			Type type = obj.GetType ();
 			IDbCommand updateDbCommand = App.Instance.DbConnection.CreateCommand ();
 			updateDbCommand.CommandText = GetUpdate (obj.GetType ());
-			foreach (PropertyInfo propertyInfo in modelInfo.KeyPropertyInfo) {
+			foreach (PropertyInfo propertyInfo in modelInfo.KeyPropertyInfo.GetType().GetProperties()) {
 					object valueType= propertyInfo.GetValue(obj,null);
 					DbCommandUtil.AddParameter(updateDbCommand, propertyInfo.Name.ToLower(),valueType);
 
