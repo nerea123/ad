@@ -82,6 +82,28 @@ namespace Serpis.Ad
 			Assert.AreEqual (1, fieldName.Length);
 
 		}
+
+		[Test()]
+		public void SelectText(){
+			ModelInfo modelInfo = new ModelInfo (typeof(ModelInfoFoo)); 
+			string select = modelInfo.SelectText;
+			Assert.AreEqual ("insert into modelinfofoo (nombre) values ( @nombre ) ",select);
+			ModelInfo modelInfo2 = new ModelInfo (typeof(ModelInfoBar)); 
+			string select2 = modelInfo2.SelectText;
+			Assert.AreEqual ("insert into modelinfobar (nombre, precio) values ( @nombre, @precio ) ",select2);
+
+		}
+
+		[Test()]
+		public void UpdateText(){
+			ModelInfo modelInfo = new ModelInfo (typeof(ModelInfoFoo)); 
+			string update= modelInfo.UpdateText;
+			Assert.AreEqual ("update modelinfofoo set nombre=@nombre where id=@id",update);
+			ModelInfo modelInfo2 = new ModelInfo (typeof(ModelInfoBar)); 
+			string update2 = modelInfo2.UpdateText;
+			Assert.AreEqual ("update modelinfobar set nombre=@nombre, precio=@precio where id=@id",update2);
+
+		}
 	}
 }
 
