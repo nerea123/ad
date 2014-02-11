@@ -27,8 +27,9 @@ namespace Serpis.Ad
 		}
 
 		public static object Load(Type type, string id){
+			ModelInfo modelInfo = ModelInfoStore.Get (type);
 			IDbCommand select = App.Instance.DbConnection.CreateCommand ();
-			select.CommandText = GetSelect (type) + id;
+			select.CommandText = modelInfo.SelectText + id;
 			IDataReader reader = select.ExecuteReader ();
 			reader.Read ();
 
@@ -99,7 +100,7 @@ namespace Serpis.Ad
 			ModelInfo modelInfo = ModelInfoStore.Get (obj.GetType());
 			Type type = obj.GetType ();
 			IDbCommand insertDbCommand = App.Instance.DbConnection.CreateCommand ();
-			insertDbCommand.CommandText = GetInsert (obj.GetType ());
+			insertDbCommand.CommandText = modelInfo.InsertText;
 			foreach (PropertyInfo propertyInfo in modelInfo.FieldPropertyInfos) {
 					object valueType= propertyInfo.GetValue(obj,null);
 					DbCommandUtil.AddParameter(insertDbCommand, propertyInfo.Name.ToLower(),valueType);
@@ -124,7 +125,7 @@ namespace Serpis.Ad
 			ModelInfo modelInfo = ModelInfoStore.Get (obj.GetType());
 			Type type = obj.GetType ();
 			IDbCommand updateDbCommand = App.Instance.DbConnection.CreateCommand ();
-			updateDbCommand.CommandText = GetUpdate (obj.GetType ());
+			updateDbCommand.CommandText = modelInfo.UpdateText;
 			foreach (PropertyInfo propertyInfo in modelInfo.KeyPropertyInfo.GetType().GetProperties()) {
 					object valueType= propertyInfo.GetValue(obj,null);
 					DbCommandUtil.AddParameter(updateDbCommand, propertyInfo.Name.ToLower(),valueType);

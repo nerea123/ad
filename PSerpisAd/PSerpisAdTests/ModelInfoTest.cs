@@ -84,12 +84,12 @@ namespace Serpis.Ad
 		}
 
 		[Test()]
-		public void SelectText(){
+		public void InsertText(){
 			ModelInfo modelInfo = new ModelInfo (typeof(ModelInfoFoo)); 
-			string select = modelInfo.SelectText;
+			string select = modelInfo.InsertText;
 			Assert.AreEqual ("insert into modelinfofoo (nombre) values ( @nombre ) ",select);
 			ModelInfo modelInfo2 = new ModelInfo (typeof(ModelInfoBar)); 
-			string select2 = modelInfo2.SelectText;
+			string select2 = modelInfo2.InsertText;
 			Assert.AreEqual ("insert into modelinfobar (nombre, precio) values ( @nombre, @precio ) ",select2);
 
 		}
@@ -102,6 +102,17 @@ namespace Serpis.Ad
 			ModelInfo modelInfo2 = new ModelInfo (typeof(ModelInfoBar)); 
 			string update2 = modelInfo2.UpdateText;
 			Assert.AreEqual ("update modelinfobar set nombre=@nombre, precio=@precio where id=@id",update2);
+
+		}
+
+		[Test()]
+		public void SelectText(){
+			ModelInfo modelInfo = new ModelInfo (typeof(ModelInfoFoo)); 
+			string select= modelInfo.SelectText;
+			Assert.AreEqual ("select nombre from modelinfofoo where id=",select);
+			ModelInfo modelInfo2 = new ModelInfo (typeof(ModelInfoBar)); 
+			string select2 = modelInfo2.SelectText;
+			Assert.AreEqual ("select nombre, precio from modelinfobar where id=",select2);
 
 		}
 	}
