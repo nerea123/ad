@@ -5,11 +5,13 @@ using System.Linq;
 
 namespace Serpis.Ad
 {
+//si es internal es publico para el ensamblado pero privado para los demas
+
 	public class ModelInfo
 	{
 		public string TableName { get {return tableName;} }
 		private Type type;
-		public ModelInfo (Type type)
+		internal ModelInfo (Type type)
 		{
 			this.type = type;
 			tableName = type.Name.ToLower ();
@@ -18,8 +20,8 @@ namespace Serpis.Ad
 			fieldNamesParamUpdate=new List<string>();
 			fieldNamesParamSelect=new List<string>();
 			fieldNamesParamInsert=new List<string>();
-			/*IfieldNames = from valune in type.GetProperties()
-			              select valune;*/
+			/*IfieldNames = from value in type.GetProperties()
+			              select value;*/
 
 			foreach (PropertyInfo propertyInfo in type.GetProperties()) {
 				if (propertyInfo.IsDefined (typeof(KeyAttribute), true)) {
@@ -34,7 +36,7 @@ namespace Serpis.Ad
 				}
 			}
 			insert=String.Format("insert into {0} ({1}) values ( {2} ) ",tableName,String.Join(", ",fieldNames),String.Join(", ",fieldNamesParamInsert));
-			select = String.Format ("select {0} from {1} where {2}=",string.Join(", ",fieldNamesParamSelect),tableName,keyName);
+			select = String.Format ("select {0} from {1} where {2}",string.Join(", ",fieldNamesParamSelect),tableName,formatparameter (keyName));
 			update=string.Format("update {0} set {1} where {2}",tableName,String.Join(", ",fieldNamesParamUpdate), formatparameter (keyName));
 		}
 

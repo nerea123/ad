@@ -1,23 +1,39 @@
 using System;
 using System.Data;
 using MySql.Data.MySqlClient;
+using System.Reflection;
+using System.Collections.Generic;
+
 namespace Serpis.Ad
 {
 	public class Categoria
 	{
 		//se puede escribir de la siguiente forma para hacerlo mas corto
 		//public int Id {set;get;}
+
+		[KeyAttribute]
 		private int id;
 		public int Id{
 			get{ return id;}
 			set{ id = value;}
 		}
+
+		[FieldAttribute]
 		private string nombre;
 		public string Nombre{
 			get{ return nombre;}
 			set{ nombre = value;}
 		}
 
+
+
+		/*public static Object Load(Type type,string id){
+			object obj=Activator.CreateInstance (type);
+			PropertyInfo propertyInfo;
+			return obj;
+		}*/
+
+	
 		public static Categoria Load(string id){
 
 			IDbCommand select = App.Instance.DbConnection.CreateCommand ();
@@ -34,6 +50,17 @@ namespace Serpis.Ad
 
 		}
 
+		public static void Save(Categoria categoria) {
+			IDbCommand updateDbCommand = App.Instance.DbConnection.CreateCommand ();
+			updateDbCommand.CommandText = "update categoria set nombre=@nombre where id=" + categoria.Id;
+			DbCommandUtil.AddParameter (updateDbCommand, "nombre", categoria.Nombre);
+			updateDbCommand.ExecuteNonQuery ();			
+		}
+
+
+		public class FieldAttritbute:Attribute{}
+
+		public class KeyAttritbute:Attribute{}
 
 	
 	}

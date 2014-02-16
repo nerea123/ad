@@ -29,20 +29,36 @@ namespace Serpis.Ad
 		public static object Load(Type type, string id){
 			ModelInfo modelInfo = ModelInfoStore.Get (type);
 			IDbCommand select = App.Instance.DbConnection.CreateCommand ();
-			select.CommandText = modelInfo.SelectText + id;
+			select.CommandText = modelInfo.SelectText;
+			Console.WriteLine (modelInfo.SelectText);
+			object obj=Activator.CreateInstance(type);
+			foreach (PropertyInfo propertyInfo in type.GetProperties()) {
+				if (propertyInfo.IsDefined (typeof(KeyAttribute), true)) {
+					object value = convert (id, propertyInfo.PropertyType);//convertimos el id al tipo de destino
+					DbCommandUtil.AddParameter (select, propertyInfo.Name.ToLower (), value);
+					propertyInfo.SetValue (obj, value, null);
+
+
+				}
+			}
+
+
 			IDataReader reader = select.ExecuteReader ();
 			reader.Read ();
-
-			object obj=Activator.CreateInstance(type);
 			foreach(PropertyInfo propertyInfo in type.GetProperties()){
-				if (propertyInfo.IsDefined (typeof(KeyAttribute), true))
-					propertyInfo.SetValue(obj,int.Parse(id),null);
-				else if (propertyInfo.IsDefined (typeof(FieldAttribute), true))
-					propertyInfo.SetValue(obj,reader[propertyInfo.Name.ToLower()],null);
+				if (propertyInfo.IsDefined (typeof(FieldAttribute), true)) {
+					object value = convert (reader [propertyInfo.Name.ToLower ()], propertyInfo.PropertyType);//convertimos el id al tipo de destino
+					propertyInfo.SetValue (obj,value , null);
+				}
 
 			}
 			reader.Close ();
 			return obj;
+		}
+
+		private static object convert (object value, Type type){
+		
+			return Convert.ChangeType (value, type);
 		}
 
 

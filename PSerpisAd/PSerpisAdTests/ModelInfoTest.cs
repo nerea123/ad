@@ -46,37 +46,37 @@ namespace Serpis.Ad
 		[Test ()]
 		public void TableName ()
 		{
-			ModelInfo modelInfo = new ModelInfo (typeof(ModelInfoFoo));
+			ModelInfo modelInfo = ModelInfoStore.Get (typeof(ModelInfoFoo));
 			Assert.AreEqual ("modelinfofoo", modelInfo.TableName);
 		}
 
 		[Test ()]
 		public void KeyPropertyInfo(){
-			ModelInfo modelInfo = new ModelInfo (typeof(ModelInfoFoo));
+			ModelInfo modelInfo =  ModelInfoStore.Get (typeof(ModelInfoFoo));
 			Assert.IsNotNull (modelInfo.KeyPropertyInfo);
 			Assert.AreEqual ("Id", modelInfo.KeyPropertyInfo.Name);
 		}
 
 		[Test()]
 		public void KeyName(){
-			ModelInfo modelInfo = new ModelInfo (typeof(ModelInfoFoo));
+			ModelInfo modelInfo =  ModelInfoStore.Get (typeof(ModelInfoFoo));
 			Assert.AreEqual ("id", modelInfo.KeyName);
 		}
 
 		[Test()]
 		public void FieldpropertyInfos(){
-			ModelInfo modelInfo = new ModelInfo (typeof(ModelInfoFoo)); 
+			ModelInfo modelInfo =  ModelInfoStore.Get (typeof(ModelInfoFoo)); 
 			PropertyInfo[] fieldPropertyInfo = modelInfo.FieldPropertyInfos;
 			Assert.AreEqual (1, fieldPropertyInfo.Length);
 
-			modelInfo = new ModelInfo (typeof(ModelInfoBar));
+			modelInfo =  ModelInfoStore.Get (typeof(ModelInfoBar));
 			PropertyInfo[] fieldPropertyInfo2 = modelInfo.FieldPropertyInfos;
 			Assert.AreEqual (2, fieldPropertyInfo2.Length);
 		}
 
 		[Test()]
 		public void FieldNames(){
-			ModelInfo modelInfo = new ModelInfo (typeof(ModelInfoFoo)); 
+			ModelInfo modelInfo = ModelInfoStore.Get (typeof(ModelInfoFoo)); 
 			string[] fieldName = modelInfo.FieldNames;
 			Assert.Contains ("nombre", fieldName);
 			Assert.AreEqual (1, fieldName.Length);
@@ -85,10 +85,10 @@ namespace Serpis.Ad
 
 		[Test()]
 		public void InsertText(){
-			ModelInfo modelInfo = new ModelInfo (typeof(ModelInfoFoo)); 
+			ModelInfo modelInfo =  ModelInfoStore.Get (typeof(ModelInfoFoo)); 
 			string select = modelInfo.InsertText;
 			Assert.AreEqual ("insert into modelinfofoo (nombre) values ( @nombre ) ",select);
-			ModelInfo modelInfo2 = new ModelInfo (typeof(ModelInfoBar)); 
+			ModelInfo modelInfo2 =  ModelInfoStore.Get (typeof(ModelInfoBar)); 
 			string select2 = modelInfo2.InsertText;
 			Assert.AreEqual ("insert into modelinfobar (nombre, precio) values ( @nombre, @precio ) ",select2);
 
@@ -96,10 +96,10 @@ namespace Serpis.Ad
 
 		[Test()]
 		public void UpdateText(){
-			ModelInfo modelInfo = new ModelInfo (typeof(ModelInfoFoo)); 
+			ModelInfo modelInfo =  ModelInfoStore.Get (typeof(ModelInfoFoo)); 
 			string update= modelInfo.UpdateText;
 			Assert.AreEqual ("update modelinfofoo set nombre=@nombre where id=@id",update);
-			ModelInfo modelInfo2 = new ModelInfo (typeof(ModelInfoBar)); 
+			ModelInfo modelInfo2 =  ModelInfoStore.Get (typeof(ModelInfoBar)); 
 			string update2 = modelInfo2.UpdateText;
 			Assert.AreEqual ("update modelinfobar set nombre=@nombre, precio=@precio where id=@id",update2);
 
@@ -107,12 +107,12 @@ namespace Serpis.Ad
 
 		[Test()]
 		public void SelectText(){
-			ModelInfo modelInfo = new ModelInfo (typeof(ModelInfoFoo)); 
+			ModelInfo modelInfo =  ModelInfoStore.Get (typeof(ModelInfoFoo)); 
 			string select= modelInfo.SelectText;
-			Assert.AreEqual ("select nombre from modelinfofoo where id=",select);
-			ModelInfo modelInfo2 = new ModelInfo (typeof(ModelInfoBar)); 
+			Assert.AreEqual ("select nombre from modelinfofoo where id=@id",select);
+			ModelInfo modelInfo2 =  ModelInfoStore.Get (typeof(ModelInfoBar)); 
 			string select2 = modelInfo2.SelectText;
-			Assert.AreEqual ("select nombre, precio from modelinfobar where id=",select2);
+			Assert.AreEqual ("select nombre, precio from modelinfobar where id=@id",select2);
 
 		}
 	}
