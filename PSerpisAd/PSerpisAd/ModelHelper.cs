@@ -8,6 +8,9 @@ namespace Serpis.Ad
 {
 	public class ModelHelper
 	{
+		public ModelHelper(){
+		}
+			
 
 		public static string GetSelect(Type type){
 			string keyName=null;

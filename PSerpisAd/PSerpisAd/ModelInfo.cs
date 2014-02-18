@@ -25,6 +25,7 @@ namespace Serpis.Ad
 
 			foreach (PropertyInfo propertyInfo in type.GetProperties()) {
 				if (propertyInfo.IsDefined (typeof(KeyAttribute), true)) {
+					Console.WriteLine ( propertyInfo.Name);
 					keyPropertyInfo = propertyInfo;
 					keyName = propertyInfo.Name.ToLower ();
 				} else if (propertyInfo.IsDefined (typeof(FieldAttribute), true)) {

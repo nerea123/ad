@@ -11,15 +11,19 @@ namespace Serpis.Ad
 		//se puede escribir de la siguiente forma para hacerlo mas corto
 		//public int Id {set;get;}
 
-		[KeyAttribute]
+
 		private int id;
+
+		[KeyAttribute]
 		public int Id{
 			get{ return id;}
 			set{ id = value;}
 		}
 
-		[FieldAttribute]
+
 		private string nombre;
+
+		[FieldAttribute]
 		public string Nombre{
 			get{ return nombre;}
 			set{ nombre = value;}
@@ -57,10 +61,6 @@ namespace Serpis.Ad
 			updateDbCommand.ExecuteNonQuery ();			
 		}
 
-
-		public class FieldAttritbute:Attribute{}
-
-		public class KeyAttritbute:Attribute{}
 
 	
 	}

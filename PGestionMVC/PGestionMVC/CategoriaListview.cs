@@ -1,5 +1,6 @@
 using System;
 using Gtk;
+using System.Collections.Generic;
 
 namespace Serpis.Ad
 {
@@ -24,8 +25,8 @@ namespace Serpis.Ad
 
 				Categoria categoria=(Categoria)ModelHelper.Load(typeof(Categoria),treeViewHelper.Id);
 
-
 				Console.WriteLine ("id=[{0}, nombre={1} ",categoria.Id,categoria.Nombre);
+			
 
 			};
 
