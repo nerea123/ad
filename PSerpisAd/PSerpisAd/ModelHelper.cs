@@ -46,6 +46,8 @@ namespace Serpis.Ad
 			}
 
 
+
+
 			IDataReader reader = select.ExecuteReader ();
 			reader.Read ();
 			foreach(PropertyInfo propertyInfo in type.GetProperties()){
@@ -58,6 +60,35 @@ namespace Serpis.Ad
 			reader.Close ();
 			return obj;
 		}
+
+		public static object Load(Type type, string id,string[]fields){
+			ModelInfo modelInfo = ModelInfoStore.Get (type,id,fields);
+			IDbCommand select = App.Instance.DbConnection.CreateCommand ();
+			select.CommandText = modelInfo.SelectText;
+			Console.WriteLine (modelInfo.SelectText);
+			object obj=Activator.CreateInstance(type);
+			foreach (PropertyInfo propertyInfo in type.GetProperties()) {
+				if (propertyInfo.IsDefined (typeof(KeyAttribute), true)) {
+					object value = convert (id, propertyInfo.PropertyType);//convertimos el id al tipo de destino
+					DbCommandUtil.AddParameter (select, propertyInfo.Name.ToLower (), value);
+					propertyInfo.SetValue (obj, value, null);
+
+
+				}
+			}
+			IDataReader reader = select.ExecuteReader ();
+			reader.Read ();
+			foreach(PropertyInfo propertyInfo in type.GetProperties()){
+				if (propertyInfo.IsDefined (typeof(FieldAttribute), true)) {
+					object value = convert (reader [propertyInfo.Name.ToLower ()], propertyInfo.PropertyType);//convertimos el id al tipo de destino
+					propertyInfo.SetValue (obj,value , null);
+				}
+
+			}
+			reader.Close ();
+			return obj;
+		}
+
 
 		private static object convert (object value, Type type){
 		

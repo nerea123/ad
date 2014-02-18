@@ -41,6 +41,40 @@ namespace Serpis.Ad
 			update=string.Format("update {0} set {1} where {2}",tableName,String.Join(", ",fieldNamesParamUpdate), formatparameter (keyName));
 		}
 
+		internal ModelInfo(Type type, string id, string[]fields){
+
+			this.type = type;
+			tableName = type.Name.ToLower ();
+			fieldPropertyInfos=new List<PropertyInfo>();
+			fieldNames=new List<string>();
+			fieldNamesParamUpdate=new List<string>();
+			fieldNamesParamSelect=new List<string>();
+			fieldNamesParamInsert=new List<string>();
+
+			foreach (PropertyInfo propertyInfo in type.GetProperties()) {
+				if (propertyInfo.Name.ToLower().Equals(id)) {
+					Console.WriteLine ( propertyInfo.Name);
+					keyPropertyInfo = propertyInfo;
+					keyName = propertyInfo.Name.ToLower ();
+				} 
+				else
+					for (int i = 0; i < fields.Length; i++) {
+						if (propertyInfo.Name.ToLower().Equals (fields[i])) {
+							fieldPropertyInfos.Add (propertyInfo);
+							fieldNames.Add (propertyInfo.Name.ToLower());
+							fieldNamesParamUpdate.Add (formatparameter(propertyInfo.Name.ToLower()));
+							fieldNamesParamInsert.Add (formatparameterSelect(propertyInfo.Name.ToLower()));
+							fieldNamesParamSelect.Add (propertyInfo.Name.ToLower());
+						}
+					}
+			}
+
+			insert=String.Format("insert into {0} ({1}) values ( {2} ) ",tableName,String.Join(", ",fieldNames),String.Join(", ",fieldNamesParamInsert));
+			select = String.Format ("select {0} from {1} where {2}",string.Join(", ",fieldNamesParamSelect),tableName,formatparameter (keyName));
+			update=string.Format("update {0} set {1} where {2}",tableName,String.Join(", ",fieldNamesParamUpdate), formatparameter (keyName));
+
+		}
+
 		private string tableName;
 		private List<PropertyInfo> fieldPropertyInfos;
 		private List<string> fieldNames;

@@ -13,6 +13,9 @@ namespace Serpis.Ad
 			this.Nombre = nombre;
 		}
 
+		public ModelInfoFoo(){
+		}
+
 		[Key]
 		public int Id {get;set;}
 
@@ -28,6 +31,9 @@ namespace Serpis.Ad
 			this.Id = id;
 			this.Nombre = nombre;
 			this.Precio = precio;
+		}
+
+		public ModelInfoBar(){
 		}
 
 		[Key]
@@ -111,6 +117,19 @@ namespace Serpis.Ad
 			string select= modelInfo.SelectText;
 			Assert.AreEqual ("select nombre from modelinfofoo where id=@id",select);
 			ModelInfo modelInfo2 =  ModelInfoStore.Get (typeof(ModelInfoBar)); 
+			string select2 = modelInfo2.SelectText;
+			Assert.AreEqual ("select nombre, precio from modelinfobar where id=@id",select2);
+
+		}
+
+		[Test()]
+		public void SelectText2(){
+			string[] fields = new string[]{"nombre"};
+			ModelInfo modelInfo =   ModelInfoStore.Get(typeof(ModelInfoFoo),"id",fields); 
+			string select= modelInfo.SelectText;
+			Assert.AreEqual ("select nombre from modelinfofoo where id=@id",select);
+			string[] fields2 = new string[]{"nombre","precio"};
+			ModelInfo modelInfo2 =  ModelInfoStore.Get(typeof(ModelInfoBar),"id",fields2);  ; 
 			string select2 = modelInfo2.SelectText;
 			Assert.AreEqual ("select nombre, precio from modelinfobar where id=@id",select2);
 
